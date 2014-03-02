@@ -7,36 +7,16 @@ import hudson.model.BuildListener;
 import hudson.model.AbstractProject;
 import hudson.tasks.Builder;
 import hudson.tasks.BuildStepDescriptor;
-import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.QueryParameter;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
 
 import com.github.lalyos.jfiglet.FigletFont;
-import java.io.StringReader;
-import java.util.List;
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 
-/**
- * Sample {@link Builder}.
- *
- * <p>
- * When the user configures the project and enables this builder,
- * {@link DescriptorImpl#newInstance(StaplerRequest)} is invoked
- * and a new {@link HelloWorldBuilder} is created. The created
- * instance is persisted to the project configuration XML by using
- * XStream, so this allows you to use instance fields (like {@link #name})
- * to remember the configuration.
- *
- * <p>
- * When a build is performed, the {@link #perform(AbstractBuild, Launcher, BuildListener)}
- * method will be invoked. 
- *
- * @author Kohsuke Kawaguchi
- */
+
 public class FigletBuilder extends Builder {
 
     private final String message;
@@ -56,9 +36,11 @@ public class FigletBuilder extends Builder {
 
     @Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
-        for(String line : message.split("\r?\n")) {
-            listener.getLogger().println(FigletFont.convertOneLine(line));
-        }        
+        if(StringUtils.isNotEmpty(message)) {
+            for(String line : message.split("\r?\n")) {
+                listener.getLogger().println(FigletFont.convertOneLine(line));
+            }        
+        }
         return true;
     }
 
@@ -90,7 +72,7 @@ public class FigletBuilder extends Builder {
         }
 
         /**
-         * Performs on-the-fly validation of the form field 'name'.
+         * Performs on-the-fly validation of the form field 'message'.
          *
          * @param value
          *      This parameter receives the value that the user has typed.
