@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.banner_buildstep;
+package org.jenkinsci.plugins.figlet_buildstep;
 import hudson.Launcher;
 import hudson.Extension;
 import hudson.util.FormValidation;
@@ -21,7 +21,6 @@ public class FigletBuilder extends Builder {
 
     private final String message;
 
-    // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
     public FigletBuilder(String message) {
         this.message = message;
@@ -82,7 +81,7 @@ public class FigletBuilder extends Builder {
         public FormValidation doCheckMessage(@QueryParameter String value)
                 throws IOException, ServletException {
             if (value.length() == 0)
-                return FormValidation.error("Please set a message");
+                return FormValidation.error(Messages.SetMessageError());
             return FormValidation.ok();
         }
 
@@ -95,7 +94,7 @@ public class FigletBuilder extends Builder {
          * This human readable name is used in the configuration screen.
          */
         public String getDisplayName() {
-            return "Figlet Builder";
+            return Messages.DisplayName();
         }
     }
 }
