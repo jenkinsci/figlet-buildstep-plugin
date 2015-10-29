@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>1.509.4</version><!-- which version of Jenkins is this plugin built against? -->
+        <version>1.625.1</version>
     </parent>
 
     <groupId>org.jenkins-ci.plugins</groupId>
@@ -11,6 +11,10 @@
     <version>0.2-SNAPSHOT</version>
     <packaging>hpi</packaging>
     <name>Figlet Buildstep</name>
+
+    <properties>
+        <workflow.version>1.10</workflow.version>
+    </properties>
 
     <!-- get every artifact through repo.jenkins-ci.org, which proxies all the artifacts that we need -->
     <repositories>
@@ -26,12 +30,31 @@
             <url>http://repo.jenkins-ci.org/public/</url>
         </pluginRepository>
     </pluginRepositories>
-  
+
     <dependencies>
         <dependency>
             <groupId>com.github.lalyos</groupId>
             <artifactId>jfiglet</artifactId>
             <version>0.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <version>${workflow.version}</version>
+            <artifactId>workflow-step-api</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-aggregator</artifactId>
+            <version>${workflow.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency> <!-- StepConfigTester -->
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-step-api</artifactId>
+            <classifier>tests</classifier>
+            <version>${workflow.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     
