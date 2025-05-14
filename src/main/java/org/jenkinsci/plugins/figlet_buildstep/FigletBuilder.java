@@ -1,4 +1,5 @@
 package org.jenkinsci.plugins.figlet_buildstep;
+
 import hudson.Launcher;
 import hudson.Extension;
 import hudson.util.FormValidation;
@@ -10,7 +11,7 @@ import hudson.tasks.BuildStepDescriptor;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 import java.io.IOException;
 
 import com.github.lalyos.jfiglet.FigletFont;
@@ -34,11 +35,11 @@ public class FigletBuilder extends Builder {
     }
 
     @Override
-    public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
+    public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) throws IOException {
         if(StringUtils.isNotEmpty(message)) {
             for(String line : message.split("\r?\n")) {
                 listener.getLogger().println(FigletFont.convertOneLine(line));
-            }        
+            }
         }
         return true;
     }
@@ -52,18 +53,15 @@ public class FigletBuilder extends Builder {
     }
 
     /**
-     * Descriptor for {@link HelloWorldBuilder}. Used as a singleton.
+     * Descriptor for {@link FigletBuilder}. Used as a singleton.
      * The class is marked as public so that it can be accessed from views.
      *
-     * <p>
-     * See <tt>src/main/resources/hudson/plugins/hello_world/HelloWorldBuilder/*.jelly</tt>
-     * for the actual HTML fragment for the configuration screen.
      */
     @Extension // This indicates to Jenkins that this is an implementation of an extension point.
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
 
         /**
-         * In order to load the persisted global configuration, you have to 
+         * In order to load the persisted global configuration, you have to
          * call load() in the constructor.
          */
         public DescriptorImpl() {
@@ -81,20 +79,20 @@ public class FigletBuilder extends Builder {
         public FormValidation doCheckMessage(@QueryParameter String value)
                 throws IOException, ServletException {
             if (value.length() == 0)
-                return FormValidation.error(Messages.SetMessageError());
+                return FormValidation.error(Messages.setMessageError());
             return FormValidation.ok();
         }
 
         public boolean isApplicable(Class<? extends AbstractProject> aClass) {
-            // Indicates that this builder can be used with all kinds of project types 
+            // Indicates that this builder can be used with all kinds of project types
             return true;
         }
 
         /**
-         * This human readable name is used in the configuration screen.
+         * This human-readable name is used in the configuration screen.
          */
         public String getDisplayName() {
-            return Messages.DisplayName();
+            return Messages.displayName();
         }
     }
 }

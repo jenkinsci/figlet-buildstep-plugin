@@ -11,7 +11,7 @@ import org.jenkinsci.plugins.workflow.steps.AbstractSynchronousNonBlockingStepEx
 import org.jenkinsci.plugins.workflow.steps.StepContextParameter;
 import org.kohsuke.stapler.DataBoundConstructor;
 
-import javax.annotation.CheckForNull;
+import java.io.Serial;
 
 /**
  * Created by acearl on 10/29/2015.
@@ -26,6 +26,7 @@ public class FigletStep extends AbstractStepImpl {
     }
 
     public static class FigletStepExecution extends AbstractSynchronousNonBlockingStepExecution<Void> {
+        @Serial
         private static final long serialVersionUID = 1L;
 
         @Inject
