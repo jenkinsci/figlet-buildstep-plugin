@@ -28,7 +28,7 @@ public class FigletBuilder extends Builder {
     }
 
     /**
-     * We'll use this from the <tt>config.jelly</tt>.
+     * We'll use this from the <code>config.jelly</code>.
      */
     public String getMessage() {
         return message;
@@ -96,4 +96,3 @@ public class FigletBuilder extends Builder {
         }
     }
 }
-
